@@ -1,0 +1,40 @@
+#!/bin/bash
+
+clear
+echo "Running Monthly File Generator"
+counter=0
+outdir=monthlyGeoFiles
+# Make output directory if doesn't exist
+[ ! -d $outdir ] && mkdir -v $outdir
+cd dailyGeoFiles
+# Produce an output file for each month
+for year in 2015 2016; do
+    for month in `seq -w 1 12`; do
+        files=`find -name "*$year$month??**.warts"`
+        #echo $files
+        outf=../$outdir/$year.$month.geodata.txt
+        echo "Generating" $outf
+        if [ -f $outf ]
+        then
+            rm $outf
+            echo "Deleted old version"
+        fi
+        filecounter=0
+        for file in $files; do
+            counter=$[$counter+1]
+            filecounter=$[$filecounter+1]
+            monitor=$(echo $file | cut -d'.' -f 7)
+            # Remove blank lines and add monitor name to end
+            #cat $file | sed "/^\s*$/d" | sed "s/$/$monitor/" >> $outf
+            cat $file | sed "/^\s*$/d ; s/$/$monitor/" >> $outf
+            # Remove duplicate lines in monthly file created by newly added data
+            if [ $(($filecounter % 1000)) = 0 ]
+            then
+                sort -u $outf -o $outf
+                echo $counter,$year,$month,$filecounter
+            fi
+        done 
+        sort -u $outf -o $outf
+    done 
+done
+cd ..

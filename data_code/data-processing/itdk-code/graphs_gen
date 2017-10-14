@@ -1,0 +1,12 @@
+# python build_graph.py '2010-07' 1&
+# python build_graph.py '2011-04' 1&
+# python build_graph.py '2011-10' 1&
+# python build_graph.py '2012-07' 1&
+# python build_graph.py '2013-04' 1&
+# python build_graph.py '2013-07' 0&
+# python build_graph.py '2014-04' 0&
+# python build_graph.py '2014-12' 0&
+
+#python build_graph.py '2015-08' 0&
+python build_graph.py '2016-03' 0&
+#python build_graph.py '2016-09' 0&

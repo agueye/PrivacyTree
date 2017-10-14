@@ -1,0 +1,38 @@
+#!/bin/bash
+
+clear
+echo "Running Yearly File Generator"
+counter=0
+outdir=yearlyGeoFilesNoMon
+# Make output directory if doesn't exist
+[ ! -d $outdir ] && mkdir -v $outdir
+cd dailyGeoFiles
+# Produce an output file for each year
+for year in 2015 2016; do
+    files=`find -name "*$year*.warts"`
+    #echo $files
+    outf=../$outdir/$year.geodata.nomon.txt
+    echo "Generating",$outf
+    if [ -f $outf ]
+    then
+        rm $outf
+        echo "Deleted old version"
+    fi
+    filecounter=0
+    for file in $files; do
+        counter=$[$counter+1]
+        filecounter=$[$filecounter+1]
+        monitor=$(echo $file | cut -d'.' -f 7)
+        # Remove blank lines and add monitor name to end
+        cat $file | sed "/^\s*$/d ; s/$/0/" >> $outf
+        # Remove duplicate lines in yearly file created by newly added data
+        if [ $(($filecounter % 1000)) = 0 ]
+        then
+            sort -u $outf -o $outf
+            echo $counter,$year,$filecounter
+        fi
+    done 
+    sort -u $outf -o $outf
+    echo $counter,$year,$filecounter
+done
+cd ..

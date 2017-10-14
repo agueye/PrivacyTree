@@ -1,0 +1,74 @@
+# This code is for importing list(s) of AS paths and converting them into
+# country code (cc) paths.
+
+import pickle
+
+filename1='asn_to_cc.pkl'
+fileobject1=open(filename1,'r')
+asn_to_cc=pickle.load(fileobject1)
+
+#filename='20151201.all-paths_reduced'
+filename='20151201_IPV4.all-paths_reduced'
+fileobject=open(filename,'r')
+data=fileobject.readlines()
+
+count=0
+paths={}
+ccdict={}
+for line in data:
+    count=count+1
+    linedata=line.split('|')  
+    linedata[-1]=linedata[-1].split()[0] # remove ' \r\n'
+    #print linedata
+    
+    # Convert from asn to cc labels
+    for x in range(len(linedata)):
+        if linedata[x] in asn_to_cc:
+            linedata[x]=asn_to_cc[linedata[x]]
+        else:
+            linedata[x]="UNKNOWN"
+            
+    # Remove adjacent duplicate country labels in each list
+    cclist=[] 
+    prev=""
+    for elem in linedata:
+        if elem==prev:
+            continue
+        cclist.append(elem)
+        ccdict[elem]=True # store a dict of cc observed
+        prev=elem
+    #print cclist
+    
+    # Create sublists and remove duplicate paths
+    for x in range(len(cclist)):
+        path=tuple(cclist[x:])
+        #print path
+        if path not in paths:
+            paths[path]=True
+
+    #if count % 200==0:
+    #    break
+
+    if count % 100000==0:
+        print ".",
+        if count % 1000000==0:
+            print " ",count
+       
+ccodes=ccdict.keys() # List of all observed country codes
+ccpaths=paths.keys() # List of all cc paths
+
+if 1==1:
+    fileobject2=open("ccpaths.pkl",'w')
+    pickle.dump(ccpaths,fileobject2)  
+    pickle.dump(ccodes,fileobject2)
+    fileobject2.close()
+
+print
+print "File lines",count
+print "ccodes",len(ccodes)
+print "Distinct paths",len(ccpaths)
+print ccodes
+
+#ccpaths.sort()
+#for line in ccpaths:
+#    print line
