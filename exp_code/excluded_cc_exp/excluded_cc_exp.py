@@ -6,7 +6,7 @@ from random import sample
 from random import choice
 
 def import_ccmap(dataset,year):
-    filename='../datafiles/'+dataset+'pre-processed/'+str(year)+'.ccmap-paths.txt'
+    filename='../../../datafiles/'+dataset+'pre-processed/'+str(year)+'.ccmap-paths.txt'
     fileobject=open(filename,'r')
     count=0  
     paths=0
@@ -65,11 +65,11 @@ def import_ccmap(dataset,year):
 def excluded_cc_exp(src_cc_set,ccmap,resfile,year,only_src_set=False,both_ways=False,trials=500,verbose=True,todisk=True):
     if both_ways:
         assert only_src_set
-        filename="../resultfiles/"+resfile+str(year)+".excludedcc_bothways.csv"        
+        filename="../../../resultfiles/"+resfile+str(year)+".excludedcc_bothways.csv"        
     elif only_src_set:
-        filename="../resultfiles/"+resfile+str(year)+".excludedcc_onlysrc.csv"
+        filename="../../../resultfiles/"+resfile+str(year)+".excludedcc_onlysrc.csv"
     else:
-        filename="../resultfiles/"+resfile+str(year)+".excludedcc.csv"
+        filename="../../../resultfiles/"+resfile+str(year)+".excludedcc.csv"
     print("output file:",filename)
     fileobject=open(filename,'w')
     output="sourcecc,nexcluded,ngood,nbad,nmixed,goodratio,badratio,definedratio,mixedratio\r\n"
