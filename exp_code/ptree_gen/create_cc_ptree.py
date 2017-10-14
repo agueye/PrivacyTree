@@ -4,6 +4,9 @@
 
 import pickle
 import networkx as nx
+from networkx.readwrite import json_graph
+import json
+
 
 #fileobject1=open('ccpaths.pkl','r')
 #ccpaths=pickle.load(fileobject1)
@@ -74,13 +77,18 @@ for year in years:
     ccpaths.sort() # the algorithm relies on the data being sorted
     fileobject1.close()
 
-    G=gen_ptrees(ccpaths,ccodes)  
-    fname=dirpath+str(year)+".ccprivtrees.pkl"
+    G=gen_ptrees(ccpaths,ccodes)
+    
+    filename=str(year)+'.ccprivtrees.json'
+    g_json = json_graph.node_link_data(G)
+    json.dump(g_json,open(filename,'w'),indent=2)
+        
+    fname=dirpath+str(year)+".ccodes.pkl"
     fileobject2=open(fname,'wb')
-    pickle.dump(G,fileobject2)
     pickle.dump(ccodes,fileobject2)
     fileobject2.close()
 
     del G
     del ccpaths
+    del ccodes
     
