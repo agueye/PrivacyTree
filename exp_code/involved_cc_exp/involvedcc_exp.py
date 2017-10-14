@@ -190,7 +190,7 @@ def plot_involved(src,involved,xvalues,xlabel):
 threshold=.00001
 plot_figs=0
 
-filename='../datafiles/cc_to_name.pkl'
+filename='../../../datafiles/cc_to_name.pkl'
 fileobject=open(filename,'rb')
 cc2name=pickle.load(fileobject,encoding='latin1')
 fileobject.close()
@@ -199,7 +199,7 @@ fileobject.close()
 years = [2015,2016]
 
 for year in years:
-    filename="../datafiles/data-Geolocation/yearlyGeoFilesNoMon/"+str(year)+".Geodata.nomon.txt"
+    filename="../../../datafiles/data-Geolocation/yearlyGeoFilesNoMon/"+str(year)+".Geodata.nomon.txt"
     #filename="../datafiles/data-Geolocation/yearlyGeoFiles/2015.geodata.txt"
     #filename="../datafiles/data-Geolocation/monthlyGeoFilesNoMon/2015.01.geodata.nomon.txt"
 
@@ -227,7 +227,7 @@ for year in years:
 
 
 
-    fileobject2=open("../resultfiles/Results-Geolocation/involved/"+str(year)+".involved_data.pkl",'wb')
+    fileobject2=open("../../../resultfiles/Results-Geolocation/involved/"+str(year)+".involved_data.pkl",'wb')
     pickle.dump(involved_all,fileobject2)
     fileobject2.close()
 
