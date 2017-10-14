@@ -12,7 +12,7 @@ import pickle
 #fileobject=open(filename,'r')
 #data=fileobject.readlines()
 
-filepath='../datafiles/data-Geolocation/yearlyGeoFiles/'
+filepath='../../../datafiles/data-Geolocation/yearlyGeoFiles/'
 
 
 years=[2015, 2016]
@@ -63,7 +63,8 @@ for year in years:
     ccpaths=list(paths.keys()) # List of all cc paths
 
     if 1==1:
-        fname=str(year)+".ccpaths.pkl"
+        dirpath='../../../resultfiles/Results-Geolocation/ptree/'
+        fname=dirpath+str(year)+".ccpaths.pkl"
         fileobject2=open(fname,'wb')
         pickle.dump(ccpaths,fileobject2)  
         pickle.dump(ccodes,fileobject2)

@@ -63,10 +63,11 @@ def gen_ptrees(ccpaths,ccodes):
     return G
     
 
-years=[2015, 2016]
+years=[2016]
 for year in years:
     print(year)
-    fname=str(year)+'.ccpaths.pkl'
+    dirpath='../../../resultfiles/Results-Geolocation/ptree/'
+    fname=dirpath+str(year)+'.ccpaths.pkl'
     fileobject1=open(fname,'rb')
     ccpaths=pickle.load(fileobject1)
     ccodes=pickle.load(fileobject1)
@@ -74,8 +75,12 @@ for year in years:
     fileobject1.close()
 
     G=gen_ptrees(ccpaths,ccodes)  
-    fname=str(year)+".ccprivtrees.pkl"
+    fname=dirpath+str(year)+".ccprivtrees.pkl"
     fileobject2=open(fname,'wb')
     pickle.dump(G,fileobject2)
     pickle.dump(ccodes,fileobject2)
     fileobject2.close()
+
+    del G
+    del ccpaths
+    
