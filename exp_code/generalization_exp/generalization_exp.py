@@ -1,7 +1,7 @@
 import pickle
 
 def active_monitors(src_cc,threshold,dataset,year):
-    filename='../datafiles/'+dataset+'pre-processed/'+str(year)+'.ccmap-sets.txt'
+    filename='../../../datafiles/'+dataset+'pre-processed/'+str(year)+'.ccmap-sets.txt'
     fileobject=open(filename,'r')
     count=0  
     monmap={}
@@ -38,7 +38,7 @@ def active_monitors(src_cc,threshold,dataset,year):
     return active   
 
 def generalization_result(src_cc,monitors,dataset,year):
-    filename='../datafiles/'+dataset+'pre-processed/'+str(year)+'.ccmap-sets.txt'
+    filename='../../../datafiles/'+dataset+'pre-processed/'+str(year)+'.ccmap-sets.txt'
     fileobject=open(filename,'r')
     count=0  
     paths=0
@@ -176,23 +176,32 @@ def generalization_result2(src_cc,monitors):
 
 # BEGIN MAIN PROCEDURE ************************************************
 
-filename='../datafiles/cc_to_name.pkl'  #Common
+filename='../../../datafiles/cc_to_name.pkl'  #Common
 fileobject=open(filename,'rb')
 cc2name=pickle.load(fileobject, encoding='latin1')
 fileobject.close()
 
-resfile = "Results-Geolocation/"
 dataset="data-Geolocation/"
+dataset="data-ASN/"
 
-years=[2015,2016]
+if dataset=="data-Geolocation/":
+    years=[2015, 2016]
+    resfile = "Results-Geolocation/generalization/"
+elif dataset=="data-ASN/":
+    years=[2015]
+    resfile = "Results-ASN/generalization/"
+else:
+    print("Unknown Dataset....exiting")
+    exit(1)
+
 
 for year in years:
     #filename='../datafiles/'+dataset+str(year)+'.cc_to_mon.pkl'   #add year
-    filename='../datafiles/'+dataset+'pre-processed/'+str(year)+'.mon_to_cc.pkl'  
+    filename='../../../datafiles/'+dataset+'pre-processed/'+str(year)+'.mon_to_cc.pkl'  
     fileobject=open(filename,'rb')
     cc2mon=pickle.load(fileobject)
     fileobject.close()
-    fname = "../resultfiles/"+resfile+str(year)+".generalization-results"
+    fname = "../../../resultfiles/"+resfile+str(year)+".generalization-results"
     fileobject=open(fname,'w')  #add year and dataset
     ccodes=list(cc2mon.keys())
     ccodes.sort()

@@ -195,14 +195,24 @@ fileobject=open(filename,'rb')
 cc2name=pickle.load(fileobject,encoding='latin1')
 fileobject.close()
 
+dataset="data-Geolocation/"
+#dataset="data-ASN/"
 
-years = [2015,2016]
+if dataset=="data-Geolocation/":
+    years=[2015, 2016]
+    resfile = "Results-Geolocation/involved/"
+elif dataset=="data-ASN/":
+    years=[2015]
+    resfile = "Results-ASN/involved/"
+else:
+    print("Unknown Dataset....exiting")
+    exit(1)
+
+
 
 for year in years:
-    filename="../../../datafiles/data-Geolocation/yearlyGeoFilesNoMon/"+str(year)+".Geodata.nomon.txt"
-    #filename="../datafiles/data-Geolocation/yearlyGeoFiles/2015.geodata.txt"
-    #filename="../datafiles/data-Geolocation/monthlyGeoFilesNoMon/2015.01.geodata.nomon.txt"
-
+    filename="../../../datafiles/"+dataset+"yearlyFilesNoMon/"+str(year)+".data.nomon.txt"
+    
     monitors=import_monitors(filename)
     print("monitors=",monitors, len(monitors))
 
@@ -227,7 +237,7 @@ for year in years:
 
 
 
-    fileobject2=open("../../../resultfiles/Results-Geolocation/involved/"+str(year)+".involved_data.pkl",'wb')
+    fileobject2=open("../../../resultfiles/"+resfile+str(year)+".involved_data.pkl",'wb')
     pickle.dump(involved_all,fileobject2)
     fileobject2.close()
 

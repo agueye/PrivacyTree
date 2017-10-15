@@ -161,8 +161,8 @@ def excluded_cc_exp(src_cc_set,ccmap,resfile,year,only_src_set=False,both_ways=F
     
 # BEGIN MAIN PROCEDURE ************************************************
 
-resfile = "Results-Geolocation/"
 dataset="data-Geolocation/"
+dataset="data-ASN/"
 
 
 # These are the country codes that had at least 1 router reporting BGP data and that had
@@ -172,7 +172,15 @@ targetcc=['AU','BR','CA','CH','EU','RU','US']
 #targetcc=['FR','RU']
 print("Target cc codes=",targetcc)
 
-years=[2015, 2016]
+if dataset=="data-Geolocation/":
+    years=[2015, 2016]
+    resfile = "Results-Geolocation/excluded/"
+elif dataset=="data-ASN/":
+    years=[2015]
+    resfile = "Results-ASN/excluded/"
+else:
+    print("Unknown Dataset....exiting")
+    exit(1)
 
 for year in years:
 

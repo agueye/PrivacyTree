@@ -1,9 +1,23 @@
 import csv
+import pickle
 
-years=[2015,2016]
+
+dataset="data-Geolocation/"
+#dataset="data-ASN/"
+
+if dataset=="data-Geolocation/":
+    years=[2015, 2016]
+    base = "../../../../resultfiles/Results-Geolocation/involved/"
+elif dataset=="data-ASN/":
+    years=[2015]
+    base = "../../../../resultfiles/Results-ASN/involved/"
+else:
+    print("Unknown Dataset....exiting")
+    exit(1)
+
 
 for year in years:
-    fileobject=open(str(year)+".involved_data.pkl",'rb')
+    fileobject=open(base+str(year)+".involved_data.pkl",'rb')
     data = pickle.load(fileobject)
     fileobject.close()
 
@@ -33,8 +47,8 @@ for year in years:
 
         dest_mat.append(tmp)
 
-    #print(dest_mat)
-    res_file = str(year)+".involved_data.csv"
+    print("Done with: ",year)
+    res_file = base+str(year)+".involved_data.csv"
     with open(res_file,'w') as f:
         writer=csv.writer(f)
         writer.writerows(dest_mat)
