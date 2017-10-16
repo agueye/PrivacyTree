@@ -7,11 +7,17 @@ import matplotlib.pyplot as plt
 #############
 ## Check how the properties of the graph are correlated to the privacy
 
+base='../../../../datafiles/data-ITDK/'
+ds=['2015-08','2016-03','2016-09']
 
-ds='2016-03'
-G = nx.read_gpickle("World.cc."+ds+".gpickle.gz")
-print(nx.info(G))
-print(G.nodes())
+for d in ds:
+    G = nx.read_gpickle(base+"World.cc."+d+".gpickle.gz")
+    bc=nx.betweenness_centrality(G)
+    print("Dataset: ",d)
+    print(nx.info(G))
+    print(bc)
+    print("\n")
+    #print(G.nodes())
 
 #nx.draw(G,with_labels = True)
 #plt.show()
